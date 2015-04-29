@@ -4,8 +4,11 @@
 void ofApp::setup(){
     
     ofBackground(0);
+    ofDirectory dir( ofToDataPath("images")); // default folder location
+//    ofDirectory dir( ofToDataPath("lookingUp"));
+//    ofDirectory dir( ofToDataPath("clouds"));
+//    ofDirectory dir( ofToDataPath("k"));
 
-    ofDirectory dir( ofToDataPath("images"));
     int filesCount = dir.listDir();
     vector<ofFile> files = dir.getFiles();
     for( int i=0;i<files.size();i++ ){
@@ -14,8 +17,7 @@ void ofApp::setup(){
         images.push_back( ofImage(files[i].getAbsolutePath()) );
     }
     
-    intensity = 100;
-    
+    intensity = 4;  // default intensity when app is first run
 }
 
 //--------------------------------------------------------------
@@ -28,7 +30,6 @@ void ofApp::draw(){
 
     ofSetColor(255);
     if( images.size() > 0 ){
-//        images[0].draw(0, 0); // draw the first image without a blend
         ofSetColor(intensity);
         for( int i=0;i<images.size();i++ ){
             ofEnableBlendMode( OF_BLENDMODE_ADD );
@@ -51,16 +52,15 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
 
+    intensity = ofMap(x, 0, ofGetWindowWidth(), 0, 20);
+    
+    cout << intensity << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    intensity = 255 * x / ofGetWindowWidth();
-//    intensity = ofClamp( intensity, 0, 20);
-    intensity = ofLerp(<#float start#>, <#float stop#>, <#float amt#>)
-    // TODO: see if ofLerp() would be a better way of range mapping?
-    
-    cout << intensity << endl;
+//    intensity = 255 * x / ofGetWindowWidth(); // range mapping expression?
+//    intensity = ofClamp( intensity, 0, 255);
 }
 
 //--------------------------------------------------------------

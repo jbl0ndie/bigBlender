@@ -20,6 +20,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         vector<ofImage> images;
-    int intensity;
+        float intensity;
 		
 };
